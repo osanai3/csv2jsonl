@@ -14,6 +14,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if len(lines) == 0 {
+		log.Fatal("no header")
+	}
 	header := lines[0]
 	for _, record := range lines[1:] {
 		r := map[string]string{}
