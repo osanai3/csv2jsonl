@@ -12,11 +12,8 @@ fn csv2jsonl() -> Result<(), Box<dyn Error>> {
     let mut reader = Reader::from_reader(io::stdin());
     let headers = reader.headers()?.to_owned();
     for result in reader.records() {
-        let mut map = HashMap::<&str, &str>::new();
         let record = result?;
-        for (header, field) in headers.iter().zip(record.iter()) {
-            map.insert(header, field);
-        }
+        let map: HashMap<&str, &str> = headers.iter().zip(record.iter()).collect();
         println!("{:?}", map);
     }
     Ok(())
