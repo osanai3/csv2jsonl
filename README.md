@@ -2,7 +2,7 @@
 
 ## install
 ```bash
-go install github.com/osanai3/csv2jsonl@v1.0.0
+cargo install --git https://github.com/osanai3/csv2jsonl --tag v2.0.0
 ```
 
 ## usage
