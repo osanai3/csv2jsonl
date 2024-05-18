@@ -1,5 +1,6 @@
 use csv::Reader;
-use std::{collections::HashMap, error::Error, io, process};
+use serde_json::Value;
+use std::{error::Error, io, process};
 
 fn main() {
     if let Err(err) = csv2jsonl() {
@@ -13,8 +14,8 @@ fn csv2jsonl() -> Result<(), Box<dyn Error>> {
     let headers = reader.headers()?.to_owned();
     for result in reader.records() {
         let record = result?;
-        let map: HashMap<&str, &str> = headers.iter().zip(record.iter()).collect();
-        println!("{:?}", map);
+        let value: Value = headers.iter().zip(record.iter()).collect();
+        println!("{}", value);
     }
     Ok(())
 }
