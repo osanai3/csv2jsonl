@@ -1,4 +1,5 @@
-use std::{error::Error, io, process};
+use csv::Reader;
+use std::{collections::HashMap, error::Error, io, process};
 
 fn main() {
     if let Err(err) = csv2jsonl() {
@@ -8,13 +9,15 @@ fn main() {
 }
 
 fn csv2jsonl() -> Result<(), Box<dyn Error>> {
-    let mut reader = csv::Reader::from_reader(io::stdin());
+    let mut reader = Reader::from_reader(io::stdin());
     let headers = reader.headers()?.to_owned();
     for result in reader.records() {
+        let mut map = HashMap::<&str, &str>::new();
         let record = result?;
         for (header, field) in headers.iter().zip(record.iter()) {
-            println!("{} {}", header, field);
+            map.insert(header, field);
         }
+        println!("{:?}", map);
     }
     Ok(())
 }
